@@ -254,15 +254,14 @@ We need Dart Sass to compile SCSS files to CSS.
 
 Download and install Dart Sass:
 ```
-wget https://github.com/sass/dart-sass/releases/download/1.69.5/dart-sass-1.69.5-linux-x64.tar.gz
-tar -xzf dart-sass-1.69.5-linux-x64.tar.gz
+wget https://github.com/sass/dart-sass/releases/download/1.79.4/dart-sass-1.79.4-linux-x64.tar.gz
+tar -xzf dart-sass-1.79.4-linux-x64.tar.gz
 sudo mv dart-sass /usr/local/
 sudo ln -s /usr/local/dart-sass/sass /usr/local/bin/sass
 ```
 To check if it's installed properly run:
 ```
 sass --version
-```
 # Files
 
 Now we need to copy the files to the server.
