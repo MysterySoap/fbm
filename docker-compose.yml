@@ -1,0 +1,63 @@
+services:
+  app:
+    build: .
+    container_name: eckmar_app
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8000:80"
+    depends_on:
+      - mysql
+      - redis
+      - elasticsearch
+    environment:
+      # Laravel expects these; they must also be set in .env
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_DATABASE: marketplace
+      DB_USERNAME: eckmar
+      DB_PASSWORD: eckmarpass
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      ELASTICSEARCH_HOST: http://elasticsearch:9200
+    # Increase PHP upload limits if you plan to upload images
+    # extra_hosts: []
+
+  mysql:
+    image: mysql:5.7
+    container_name: eckmar_db
+    command: --sql_mode=NO_ENGINE_SUBSTITUTION --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: marketplace
+      MYSQL_USER: eckmar
+      MYSQL_PASSWORD: eckmarpass
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"  # Optional: expose DB on 3307
+
+  redis:
+    image: redis:6-alpine
+    container_name: eckmar_redis
+    ports:
+      - "6379:6379"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.18
+    container_name: eckmar_es
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+volumes:
+  db_data:
+  es_data:
