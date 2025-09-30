@@ -1,23 +1,686 @@
-// Main SCSS entry point for the application
-// Import Bootstrap or other CSS frameworks as needed
-// @import '~bootstrap/scss/bootstrap';
-
+// Facebook Marketplace inspired styling for crypto marketplace
 // Variables
-$primary-color: #007bff;
-$secondary-color: #6c757d;
-$font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$primary-blue: #1877f2;
+$light-blue: #e7f3ff;
+$dark-gray: #1c1e21;
+$medium-gray: #65676b;
+$light-gray: #f0f2f5;
+$border-gray: #dadde1;
+$white: #ffffff;
+$green: #42b883;
+$red: #e74c3c;
+$orange: #f39c12;
 
-// Base styles
-body {
-    font-family: $font-family;
-    line-height: 1.6;
-    color: #333;
+// Typography
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+$font-size-base: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 20px;
+$font-size-xxl: 24px;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 20px;
+$spacing-xxl: 24px;
+
+// Border radius
+$border-radius: 8px;
+$border-radius-lg: 12px;
+
+// Shadows
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.12);
+
+// Reset and base styles
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
+body {
+    font-family: $font-family;
+    font-size: $font-size-base;
+    line-height: 1.34;
+    color: $dark-gray;
+    background-color: $light-gray;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// Layout
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 $spacing-lg;
 }
 
-// Add your custom styles here
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -#{$spacing-sm};
+}
+
+.col {
+    flex: 1;
+    padding: 0 $spacing-sm;
+}
+
+// Header/Navigation (Facebook-style)
+.navbar {
+    background-color: $white;
+    border-bottom: 1px solid $border-gray;
+    padding: $spacing-md 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: $shadow-sm;
+
+    .navbar-brand {
+        font-size: $font-size-xxl;
+        font-weight: bold;
+        color: $primary-blue;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            color: darken($primary-blue, 10%);
+        }
+    }
+
+    .navbar-nav {
+        display: flex;
+        list-style: none;
+        align-items: center;
+        gap: $spacing-xl;
+
+        .nav-link {
+            color: $medium-gray;
+            text-decoration: none;
+            font-weight: 500;
+            padding: $spacing-sm $spacing-md;
+            border-radius: $border-radius;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: $light-gray;
+                color: $dark-gray;
+            }
+
+            &.active {
+                color: $primary-blue;
+                background-color: $light-blue;
+            }
+        }
+    }
+
+    .navbar-search {
+        flex: 1;
+        max-width: 320px;
+        margin: 0 $spacing-xl;
+
+        input {
+            width: 100%;
+            padding: $spacing-md $spacing-lg;
+            border: 1px solid $border-gray;
+            border-radius: 50px;
+            background-color: $light-gray;
+            font-size: $font-size-base;
+            outline: none;
+            transition: all 0.2s ease;
+
+            &:focus {
+                background-color: $white;
+                border-color: $primary-blue;
+                box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+            }
+
+            &::placeholder {
+                color: $medium-gray;
+            }
+        }
+    }
+}
+
+// Main content area
+.main-content {
+    display: flex;
+    gap: $spacing-xl;
+    padding: $spacing-xl 0;
+    min-height: calc(100vh - 80px);
+}
+
+// Sidebar (Categories, Filters)
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+
+    .sidebar-section {
+        background-color: $white;
+        border-radius: $border-radius-lg;
+        padding: $spacing-lg;
+        margin-bottom: $spacing-lg;
+        box-shadow: $shadow-sm;
+
+        h3 {
+            font-size: $font-size-lg;
+            font-weight: 600;
+            margin-bottom: $spacing-md;
+            color: $dark-gray;
+        }
+
+        .category-list {
+            list-style: none;
+
+            li {
+                margin-bottom: $spacing-xs;
+
+                a {
+                    display: block;
+                    padding: $spacing-sm $spacing-md;
+                    color: $medium-gray;
+                    text-decoration: none;
+                    border-radius: $border-radius;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background-color: $light-gray;
+                        color: $dark-gray;
+                    }
+
+                    &.active {
+                        background-color: $light-blue;
+                        color: $primary-blue;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+
+    .filter-section {
+        .filter-group {
+            margin-bottom: $spacing-lg;
+
+            label {
+                display: block;
+                font-weight: 500;
+                margin-bottom: $spacing-xs;
+                color: $dark-gray;
+            }
+
+            select,
+            input {
+                width: 100%;
+                padding: $spacing-sm $spacing-md;
+                border: 1px solid $border-gray;
+                border-radius: $border-radius;
+                font-size: $font-size-base;
+                outline: none;
+                transition: border-color 0.2s ease;
+
+                &:focus {
+                    border-color: $primary-blue;
+                }
+            }
+        }
+    }
+}
+
+// Product grid
+.products-container {
+    flex: 1;
+}
+
+.products-header {
+    background-color: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-lg;
+    margin-bottom: $spacing-lg;
+    box-shadow: $shadow-sm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+        font-size: $font-size-xxl;
+        font-weight: 600;
+        color: $dark-gray;
+    }
+
+    .view-toggle {
+        display: flex;
+        gap: $spacing-sm;
+
+        button {
+            padding: $spacing-sm $spacing-md;
+            border: 1px solid $border-gray;
+            background-color: $white;
+            border-radius: $border-radius;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: $light-gray;
+            }
+
+            &.active {
+                background-color: $primary-blue;
+                color: $white;
+                border-color: $primary-blue;
+            }
+        }
+    }
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: $spacing-lg;
+}
+
+// Product cards (Facebook Marketplace style)
+.product-card {
+    background-color: $white;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    box-shadow: $shadow-sm;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: $shadow-lg;
+        transform: translateY(-2px);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 200px;
+        background-color: $light-gray;
+        position: relative;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: $spacing-sm;
+            right: $spacing-sm;
+            background-color: $green;
+            color: $white;
+            padding: $spacing-xs $spacing-sm;
+            border-radius: $border-radius;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+
+    .product-info {
+        padding: $spacing-lg;
+
+        .product-price {
+            font-size: $font-size-xl;
+            font-weight: 700;
+            color: $dark-gray;
+            margin-bottom: $spacing-xs;
+
+            .crypto-symbol {
+                font-size: $font-size-base;
+                color: $medium-gray;
+                font-weight: 500;
+            }
+        }
+
+        .product-title {
+            font-size: $font-size-lg;
+            font-weight: 500;
+            color: $dark-gray;
+            margin-bottom: $spacing-sm;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: $medium-gray;
+            font-size: 13px;
+
+            .seller-info {
+                display: flex;
+                align-items: center;
+                gap: $spacing-xs;
+
+                .seller-avatar {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background-color: $light-gray;
+                }
+
+                .seller-rating {
+                    color: $green;
+                    font-weight: 500;
+                }
+            }
+
+            .product-location {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+// Buttons (Facebook style)
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-sm $spacing-lg;
+    border: none;
+    border-radius: $border-radius;
+    font-size: $font-size-base;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    gap: $spacing-xs;
+
+    &.btn-primary {
+        background-color: $primary-blue;
+        color: $white;
+
+        &:hover {
+            background-color: darken($primary-blue, 8%);
+        }
+    }
+
+    &.btn-secondary {
+        background-color: $light-gray;
+        color: $dark-gray;
+
+        &:hover {
+            background-color: darken($light-gray, 5%);
+        }
+    }
+
+    &.btn-success {
+        background-color: $green;
+        color: $white;
+
+        &:hover {
+            background-color: darken($green, 8%);
+        }
+    }
+
+    &.btn-outline {
+        background-color: transparent;
+        border: 1px solid $border-gray;
+        color: $dark-gray;
+
+        &:hover {
+            background-color: $light-gray;
+        }
+    }
+
+    &.btn-sm {
+        padding: $spacing-xs $spacing-md;
+        font-size: 13px;
+    }
+
+    &.btn-lg {
+        padding: $spacing-md $spacing-xl;
+        font-size: $font-size-lg;
+    }
+}
+
+// Forms (Facebook style)
+.form-group {
+    margin-bottom: $spacing-lg;
+
+    label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: $spacing-xs;
+        color: $dark-gray;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: $spacing-md;
+        border: 1px solid $border-gray;
+        border-radius: $border-radius;
+        font-size: $font-size-base;
+        font-family: $font-family;
+        outline: none;
+        transition: all 0.2s ease;
+
+        &:focus {
+            border-color: $primary-blue;
+            box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+        }
+
+        &::placeholder {
+            color: $medium-gray;
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .form-text {
+        font-size: 12px;
+        color: $medium-gray;
+        margin-top: $spacing-xs;
+    }
+}
+
+// Cards and panels
+.card {
+    background-color: $white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-sm;
+    overflow: hidden;
+
+    .card-header {
+        padding: $spacing-lg;
+        border-bottom: 1px solid $border-gray;
+        background-color: $light-gray;
+
+        h3 {
+            font-size: $font-size-lg;
+            font-weight: 600;
+            color: $dark-gray;
+        }
+    }
+
+    .card-body {
+        padding: $spacing-lg;
+    }
+
+    .card-footer {
+        padding: $spacing-lg;
+        border-top: 1px solid $border-gray;
+        background-color: $light-gray;
+    }
+}
+
+// Crypto-specific styling
+.crypto-price {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    .crypto-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+
+    .price-usd {
+        color: $medium-gray;
+        font-size: 13px;
+    }
+}
+
+.wallet-balance {
+    background: linear-gradient(135deg, $primary-blue, lighten($primary-blue, 10%));
+    color: $white;
+    padding: $spacing-lg;
+    border-radius: $border-radius-lg;
+    text-align: center;
+
+    .balance-amount {
+        font-size: $font-size-xxl;
+        font-weight: 700;
+        margin-bottom: $spacing-xs;
+    }
+
+    .balance-label {
+        opacity: 0.9;
+        font-size: $font-size-base;
+    }
+}
+
+// Status badges
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 500;
+    gap: $spacing-xs;
+
+    &.status-active {
+        background-color: lighten($green, 40%);
+        color: darken($green, 10%);
+    }
+
+    &.status-pending {
+        background-color: lighten($orange, 40%);
+        color: darken($orange, 10%);
+    }
+
+    &.status-inactive {
+        background-color: lighten($red, 40%);
+        color: darken($red, 10%);
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+        gap: $spacing-lg;
+    }
+
+    .sidebar {
+        width: 100%;
+        order: 2;
+    }
+
+    .products-container {
+        order: 1;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: $spacing-md;
+    }
+
+    .navbar {
+        .navbar-search {
+            display: none;
+        }
+
+        .navbar-nav {
+            gap: $spacing-sm;
+        }
+    }
+
+    .products-header {
+        flex-direction: column;
+        gap: $spacing-md;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 $spacing-sm;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-card .product-info {
+        padding: $spacing-md;
+    }
+}
+
+// Utility classes
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: $spacing-xs; }
+.mb-2 { margin-bottom: $spacing-sm; }
+.mb-3 { margin-bottom: $spacing-md; }
+.mb-4 { margin-bottom: $spacing-lg; }
+.mb-5 { margin-bottom: $spacing-xl; }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: $spacing-xs; }
+.mt-2 { margin-top: $spacing-sm; }
+.mt-3 { margin-top: $spacing-md; }
+.mt-4 { margin-top: $spacing-lg; }
+.mt-5 { margin-top: $spacing-xl; }
+
+.d-flex { display: flex; }
+.d-block { display: block; }
+.d-inline { display: inline; }
+.d-none { display: none; }
+
+.justify-content-center { justify-content: center; }
+.justify-content-between { justify-content: space-between; }
+.align-items-center { align-items: center; }
+
+.w-100 { width: 100%; }
+.h-100 { height: 100%; }
+
+// Loading states
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, $light-gray 25%, lighten($light-gray, 5%) 50%, $light-gray 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
