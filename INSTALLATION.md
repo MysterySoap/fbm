@@ -249,25 +249,20 @@ redis-cli
 It should open Redis interface running on port 6379. By entering `ping` you should get response `PONG`.
 If everything is fine, type exit and exit redis-cli.
 
-# Node and NPM
-We need NodeJS and NPM in order to compile our client side css files.
+# Dart Sass
+We need Dart Sass to compile SCSS files to CSS.
 
-Install NodeJS:
+Download and install Dart Sass:
 ```
-sudo apt-get install -y nodejs
+wget https://github.com/sass/dart-sass/releases/download/1.69.5/dart-sass-1.69.5-linux-x64.tar.gz
+tar -xzf dart-sass-1.69.5-linux-x64.tar.gz
+sudo mv dart-sass /usr/local/
+sudo ln -s /usr/local/dart-sass/sass /usr/local/bin/sass
 ```
-Install NPM:
+To check if it's installed properly run:
 ```
-sudo apt-get install -y npm
+sass --version
 ```
-To check if they are installed properly run:
-```
-node -v
-```
-```
-npm -v
-```
-(Above code are 2 commands)
 # Files
 
 Now we need to copy the files to the server.
@@ -370,11 +365,9 @@ cd /var/www/eckmar
 ```
 composer install
 ```
+Compile SCSS to CSS:
 ```
-npm install
-```
-```
-npm run prod
+sass resources/assets/sass/app.scss public/css/app.css
 ```
 ```
 cp .env.example .env
